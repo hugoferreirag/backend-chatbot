@@ -26,11 +26,11 @@ const clientsService = {
   // },
   filter: async (req, res) => {
     const { from } = req.body;
-    console.log(from)
     try {
     if (from) {
-      console.log('netrou')
         const existsClient = await clients.findOne({ from: from });
+        console.log('createSuccess', existsClient)
+
         res.json(existsClient).status(200);
       } 
     } catch (error) {
@@ -52,6 +52,7 @@ const clientsService = {
         throw { msg: `Contato ${existsClient.from} já existente no sistema`, status: 400 };
 
       const data = await clients.create(payload);
+      console.log('createSuccess', data)
       res.json(data).status(201);
     } catch (error) {
       if (error.status) res.status(error.status).json(error.msg);
