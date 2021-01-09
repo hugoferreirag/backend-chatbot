@@ -26,9 +26,9 @@ const clientsService = {
   // },
   filter: async (req, res) => {
     const { from } = req.body;
+    console.log(req.body)
     try {
     if (from) {
-        console.log(req.body)
         const existsClient = await clients.findOne({ from: from });
         console.log('se nao existir', existsClient)
 
