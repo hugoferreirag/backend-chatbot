@@ -25,12 +25,12 @@ const clientsService = {
   //   }
   // },
   filter: async (req, res) => {
-    const { cellPhone } = req.body;
-    console.log(cellPhone)
+    const { from } = req.body;
+    console.log(from)
     try {
-    if (cellPhone) {
+    if (from) {
       console.log('netrou')
-        const existsClient = await clients.findOne({ cellPhone: cellPhone });
+        const existsClient = await clients.findOne({ from: from });
         res.json(existsClient).status(200);
       } 
     } catch (error) {
@@ -43,13 +43,13 @@ const clientsService = {
       if (
         !payload.name ||
         !payload.cpf ||
-        !payload.cellPhone ||
+        !payload.from ||
         !payload.age
       )
         throw { msg: "Dados inválidos", status: 400 };
-        const existsClient = await clients.findOne({ cellPhone: payload.cellPhone, cpf:payload.cpf });
+        const existsClient = await clients.findOne({ from: payload.from, cpf:payload.cpf });
         if (existsClient) 
-        throw { msg: `Contato ${existsClient.cellPhone} já existente no sistema`, status: 400 };
+        throw { msg: `Contato ${existsClient.from} já existente no sistema`, status: 400 };
 
       const data = await clients.create(payload);
       res.json(data).status(201);

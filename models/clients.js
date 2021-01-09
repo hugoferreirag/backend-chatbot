@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  cellPhone: {
+  from: {
     type: String
   },
   age: {
