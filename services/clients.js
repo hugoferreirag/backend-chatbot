@@ -28,8 +28,9 @@ const clientsService = {
     const { from } = req.body;
     try {
     if (from) {
+        console.log(req.body)
         const existsClient = await clients.findOne({ from: from });
-        console.log('createSuccess', existsClient)
+        console.log('se nao existir', existsClient)
 
         res.json(existsClient).status(200);
       } 
