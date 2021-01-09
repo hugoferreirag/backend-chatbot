@@ -2,15 +2,7 @@ const mongoose = require('mongoose');
 require('../config/mongodb');
 
 const schema = new mongoose.Schema({
-  codNumber: {
-    type: String,
-    required: true,
-  },
   name: {
-    type: String,
-    required: true,
-  },
-  babyName: {
     type: String,
     required: true,
   },
@@ -18,30 +10,13 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  address: {
+  cellPhone: {
     type: String
   },
-  complement: {
-    type: String
-  },
-  cep: {
-    type: String
-  },
-  city: {
-    type: String
-  },
-  email: {
-    type: String
-  },
-  bairro: {
-    type: String
-  },
-  celPhone: {
-    type: String
-  },
-  phone: {
-    type: String
-  },
+  age: {
+    type: String,
+    required: true
+  }
 }, { timestamps: true });
 const clients = mongoose.model('clients', schema);
 
