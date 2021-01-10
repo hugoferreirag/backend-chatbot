@@ -99,7 +99,11 @@ const clientsService = {
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
       await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper, age: body.client});
     }
-    if(parseInt(existsPreRegistration.stepper, 10) > 2) {
+    if(existsPreRegistration.stepper > 3) {
+      const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
+      await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper});
+    }
+    if(existsPreRegistration.stepper > 4) {
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
       await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper});
     }
