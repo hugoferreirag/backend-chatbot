@@ -10,6 +10,18 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  cpf: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: String,
+    required: true
+  }
 }, { timestamps: true });
 const preRegistration = mongoose.model('preRegistration', schema);
 
