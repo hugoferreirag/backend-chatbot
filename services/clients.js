@@ -65,8 +65,9 @@ const clientsService = {
 
       return;
     }
-    const updatedPreRegistration = await preRegistration.updateOne({from: from},{ from, stepper: 0});
-    res.status(200).json(updatedPreRegistration.stepper);
+    await preRegistration.updateOne({from: from},{ from, stepper: 0});
+    const updatedPreRegistration = preRegistration.findOne({from: from});
+    res.status(200).json(updatedPreRegistration);
     return;
   },
   updateStepper: async (req,res) => {
