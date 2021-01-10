@@ -46,7 +46,7 @@ const clientsService = {
     const existsPreRegistration = await preRegistration.findOne({from: from});
     if(!existsPreRegistration) {
       const newPreRegistration = await preRegistration.create({from, stepper: 0});
-      res.status(200).json(existsPreRegistration.stepper);
+      res.status(200).json(newPreRegistration.stepper);
       return;
     }
     res.status(200).json(existsPreRegistration.stepper);
