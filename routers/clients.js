@@ -11,9 +11,18 @@ routers.post('/filter', (req,res) => {
 routers.post('/createClient', (req,res) => {
     clientsService.create(req,res)
 });
-// routers.delete('/:id', (req,res) => {
-//     clientsService.delete(req,res)
-// });
+routers.delete('/delete', (req,res) => {
+    clientsService.delete(req,res)
+});
+routers.get('/stepper/:from', (req,res) => {
+    clientsService.verifyStepper(req,res)
+});
+routers.put('/stepper/:from', (req,res) => {
+    clientsService.updateStepper(req,res)
+});
+routers.put('/stepper/reset/:from', (req,res) => {
+    clientsService.resetStepper(req,res)
+});
 // routers.put('/:id', (req,res) => {
 //     clientsService.update(req,res)
 // });

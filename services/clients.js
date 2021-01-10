@@ -1,37 +1,14 @@
 const clients = require("../models/clients");
+const preRegistration = require("../models/preRegistration");
 
 const clientsService = {
-  // getAll: async (req, res) => {
-  //   const { page, noLimit } = req.body;
-  //   try {
-  //     if (noLimit === true) {
-  //       const count = await clients.countDocuments("clients");
-  //       const countPage = page - 1;
-  //       const limit = 10;
-  //       const skip = limit * countPage - 1 + 1;
-
-  //       const items = await clients
-  //         .find()
-  //         .skip(skip)
-  //         .limit(limit);
-  //       res.json({ items, total: count }).status(200);
-  //     } else {
-  //       const items = await clients.find();
-
-  //       res.json({ items }).status(200);
-  //     }
-  //   } catch (error) {
-  //     res.json(error).status(500);
-  //   }
-  // },
   filter: async (req, res) => {
     const { from } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     try {
     if (from) {
         const existsClient = await clients.findOne({ from: from });
         console.log('se nao existir', existsClient)
-
         res.json(existsClient).status(200);
       } 
     } catch (error) {
@@ -60,24 +37,69 @@ const clientsService = {
       else res.json(error).status(500);
     }
   },
-  // delete: async (req, res) => {
-  //   const { id } = req.params;
-  //   try {
-  //     const clientExists = await clients.find({ _id: id });
-  //     if (!clientExists.length)
-  //       throw {
-  //         msg: "Cliente não existe",
-  //         status: 400,
-  //       };
+  verifyStepper: async (req,res) => {
+    const { from } = req.param;
+    if(!from){
+      res.status(404).json('Whatsapp não informado');
+      return;
+    } 
+    const existsPreRegistration = await preRegistration.findOne({from: from});
+    if(!existsPreRegistration) {
+      const newPreRegistration = await preRegistration.create({from, stepper: 0});
+      res.status(200).json(existsPreRegistration.stepper);
+      return;
+    }
+    res.status(200).json(existsPreRegistration.stepper);
+    return;
+  },
+  resetStepper: async (req,res) => {
+    const { from } = req.param;
+    if(!from){
+      res.status(404).json('Whatsapp não informado');
+      return;
+    } 
+    const existsPreRegistration = await preRegistration.findOne({from: from});
+    if(!existsPreRegistration) {
+      const newPreRegistration = await preRegistration.create({from, stepper: 0});
+      res.status(200).json(newPreRegistration.stepper);
 
-  //     if (!id) throw { msg: "Id não informado", status: 400 };
-  //     const data = await clients.remove({ _id: id });
-  //     res.json(data).status(204);
-  //   } catch (error) {
-  //     if (error.status) res.status(error.status).json(error.msg);
-  //     else res.json(error).status(500);
-  //   }
-  // },
+      return;
+    }
+    const updatedPreRegistration = await preRegistration.updateOne({from: from},{ from, stepper: 0});
+    res.status(200).json(updatedPreRegistration.stepper);
+    return;
+  },
+  updateStepper: async (req,res) => {
+    const { from } = req.param;
+    if(!from){
+      res.status(404).json('Whatsapp não informado');
+      return;
+    } 
+    const existsPreRegistration = await preRegistration.findOne({from: from});
+    if(!existsPreRegistration) {
+      const newPreRegistration = await preRegistration.create({from, stepper: 0});
+      res.status(200).json(newPreRegistration.stepper);
+      return
+    }
+    const updatedPreRegistration = await preRegistration.updateOne({from: from},{ from, stepper: existsPreRegistration.stepper++});
+    res.status(200).json(updatedPreRegistration.stepper);
+    return;
+  },
+  deletePreRegistration: async (req,res) => {
+    const { from } = req.param;
+    if(!from){
+      res.status(404).json('Whatsapp não informado');
+      return;
+    } 
+    const existsPreRegistration = await preRegistration.findOne({from: from});
+    if(!existsPreRegistration) {
+      res.status(200);
+      return;
+    }
+    const deletePreRegistration = await preRegistration.deleteOne({from: from});
+    res.status(200).json(deletePreRegistration);
+    return;
+  }
   // update: async (req, res) => {
   //   const payload = req.body;
   //   const { id } = req.params;
