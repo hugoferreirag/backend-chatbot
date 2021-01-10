@@ -72,44 +72,44 @@ const clientsService = {
   },
   updateStepper: async (req,res) => {
     const {body} = req;
-    const {from} = body;
+    console.log('corpo:', body)
     if(!from){
       res.status(404).json('Whatsapp não informado');
       return;
     } 
-    const existsPreRegistration = await preRegistration.findOne({from: from});
+    const existsPreRegistration = await preRegistration.findOne({from: body.from});
     console.log('temp', existsPreRegistration)
     if(!existsPreRegistration) {
-      const newPreRegistration = await preRegistration.create({from, stepper: 0});
+      const newPreRegistration = await preRegistration.create({from: body.from, stepper: 0});
       res.status(200).json(newPreRegistration.stepper);
       return
     }
     if(existsPreRegistration.stepper == 0) {
       console.log('stepper 1 name:', body.client);
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper, name: body.client});
+      await preRegistration.updateOne({from: body.from},{...existsPreRegistration, stepper: incrementStepper, name: body.client});
     }
     if(existsPreRegistration.stepper == 1) {
       console.log('stepper 2 cpf:', body.client);
 
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper, cpf: body.client});
+      await preRegistration.updateOne({from: body.from},{...existsPreRegistration, stepper: incrementStepper, cpf: body.client});
     }
     if(existsPreRegistration.stepper == 2) {
       console.log('stepper 3 age:', body.client);
 
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper, age: body.client});
+      await preRegistration.updateOne({from: body.from},{...existsPreRegistration, stepper: incrementStepper, age: body.client});
     }
     if(existsPreRegistration.stepper == 3) {
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper});
+      await preRegistration.updateOne({from: body.from},{...existsPreRegistration, stepper: incrementStepper});
     }
     if(existsPreRegistration.stepper == 4) {
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper});
+      await preRegistration.updateOne({from: body.from},{...existsPreRegistration, stepper: incrementStepper});
     }
-    const updatedPreRegistration = await preRegistration.findOne({from: from});
+    const updatedPreRegistration = await preRegistration.findOne({from: body.from});
     console.log(updatedPreRegistration)
     res.json(updatedPreRegistration).status(200);
     return;
