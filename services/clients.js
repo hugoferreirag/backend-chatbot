@@ -70,7 +70,8 @@ const clientsService = {
     return;
   },
   updateStepper: async (req,res) => {
-    const {from, body} = req.params;
+    const {body} = req;
+    const {from} = body;
     if(!from){
       res.status(404).json('Whatsapp não informado');
       return;
