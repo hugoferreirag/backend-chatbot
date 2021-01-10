@@ -38,7 +38,7 @@ const clientsService = {
     }
   },
   verifyStepper: async (req,res) => {
-    const { from } = req.param;
+    const from = req.param;
     if(!from){
       res.status(404).json('Whatsapp não informado');
       return;
@@ -53,7 +53,7 @@ const clientsService = {
     return;
   },
   resetStepper: async (req,res) => {
-    const { from } = req.param;
+    const from = req.param;
     if(!from){
       res.status(404).json('Whatsapp não informado');
       return;
@@ -70,7 +70,7 @@ const clientsService = {
     return;
   },
   updateStepper: async (req,res) => {
-    const { from } = req.param;
+    const from = req.param;
     if(!from){
       res.status(404).json('Whatsapp não informado');
       return;
@@ -86,7 +86,7 @@ const clientsService = {
     return;
   },
   deletePreRegistration: async (req,res) => {
-    const { from } = req.param;
+    const from = req.param;
     if(!from){
       res.status(404).json('Whatsapp não informado');
       return;
