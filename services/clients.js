@@ -82,15 +82,20 @@ const clientsService = {
       res.status(200).json(newPreRegistration.stepper);
       return
     }
-    if(existsPreRegistration.stepper == 1) {
+    if(existsPreRegistration.stepper == 0) {
+      console.log('stepper 1 name:', body.client);
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
       await preRegistration.updateOne({from: from},{ from, stepper: incrementStepper, name: body.client});
     }
-    if(existsPreRegistration.stepper == 2) {
+    if(existsPreRegistration.stepper == 1) {
+      console.log('stepper 2 cpf:', body.client);
+
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
       await preRegistration.updateOne({from: from},{ from, stepper: incrementStepper, cpf: body.client});
     }
-    if(existsPreRegistration.stepper == 3) {
+    if(existsPreRegistration.stepper == 2) {
+      console.log('stepper 3 age:', body.client);
+
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
       await preRegistration.updateOne({from: from},{ from, stepper: incrementStepper, age: body.client});
     }
