@@ -17,7 +17,7 @@ routers.delete('/delete', (req,res) => {
 routers.get('/stepper/:from', (req,res) => {
     clientsService.verifyStepper(req,res)
 });
-routers.put('/stepper/:from', (req,res) => {
+routers.put('/stepper', (req,res) => {
     clientsService.updateStepper(req,res)
 });
 routers.put('/stepper/reset/:from', (req,res) => {

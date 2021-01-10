@@ -70,7 +70,7 @@ const clientsService = {
     return;
   },
   updateStepper: async (req,res) => {
-    const {from} = req.params;
+    const {from, body} = req.params;
     if(!from){
       res.status(404).json('Whatsapp não informado');
       return;
@@ -81,10 +81,20 @@ const clientsService = {
       res.status(200).json(newPreRegistration.stepper);
       return
     }
-    const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-    await preRegistration.updateOne({from: from},{ from, stepper: incrementStepper});
+    if(existsPreRegistration.stepper == 1) {
+      const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
+      await preRegistration.updateOne({from: from},{ from, stepper: incrementStepper, name: body.name});
+    }
+    if(existsPreRegistration.stepper == 2) {
+      const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
+      await preRegistration.updateOne({from: from},{ from, stepper: incrementStepper, cpf: body.cpf});
+    }
+    if(existsPreRegistration.stepper == 3) {
+      const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
+      await preRegistration.updateOne({from: from},{ from, stepper: incrementStepper, age: body.age});
+    }
     const updatedPreRegistration = await preRegistration.findOne({from: from});
-    res.json(updatedPreRegistration.stepper).status(200);
+    res.json(updatedPreRegistration).status(200);
     return;
   },
   deletePreRegistration: async (req,res) => {
