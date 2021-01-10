@@ -87,29 +87,30 @@ const clientsService = {
     if(existsPreRegistration.stepper == 0) {
       console.log('stepper 1 name:', body.client);
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper, name: body.client});
+      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper, name: body.client});
     }
     if(existsPreRegistration.stepper == 1) {
       console.log('stepper 2 cpf:', body.client);
 
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper, cpf: body.client});
+      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper, cpf: body.client});
     }
     if(existsPreRegistration.stepper == 2) {
       console.log('stepper 3 age:', body.client);
 
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper, age: body.client});
+      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper, age: body.client});
     }
     if(existsPreRegistration.stepper == 3) {
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper});
+      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper});
     }
     if(existsPreRegistration.stepper == 4) {
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: from},{...existsPreRegistration, from, stepper: incrementStepper});
+      await preRegistration.updateOne({from: from},{...existsPreRegistration, stepper: incrementStepper});
     }
     const updatedPreRegistration = await preRegistration.findOne({from: from});
+    console.log(updatedPreRegistration)
     res.json(updatedPreRegistration).status(200);
     return;
   },
