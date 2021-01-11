@@ -90,27 +90,15 @@ const clientsService = {
       await preRegistration.updateOne({from: body.from},{...existsPreRegistration._doc, stepper: incrementStepper, name: body.client});
     }
     if(existsPreRegistration.stepper == 1) {
-      console.log('stepper 2 cpf:', body.client);
-
-      const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: body.from},{...existsPreRegistration._doc, stepper: incrementStepper, cpf: body.client});
-    }
-    if(existsPreRegistration.stepper == 2) {
       console.log('stepper 3 age:', body.client);
 
       const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
       await preRegistration.updateOne({from: body.from},{...existsPreRegistration._doc, stepper: incrementStepper, age: body.client});
+      await clients.create({...existsPreRegistration._doc, age: body.client});
     }
-    if(existsPreRegistration.stepper == 3) {
-      const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: body.from},{...existsPreRegistration._doc, stepper: incrementStepper});
-    }
-    if(existsPreRegistration.stepper == 4) {
-      const incrementStepper = parseInt(existsPreRegistration.stepper, 10) + 1
-      await preRegistration.updateOne({from: body.from},{...existsPreRegistration._doc, stepper: incrementStepper});
-    }
+
     const updatedPreRegistration = await preRegistration.findOne({from: body.from});
-    console.log(updatedPreRegistration)
+
     res.json(updatedPreRegistration).status(200);
     return;
   },
